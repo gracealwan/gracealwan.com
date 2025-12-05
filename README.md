@@ -1,5 +1,5 @@
 # gracealwan.com
-Personal Website 
+Works in progress personal website!
 ```
 npm install # install dependencies
 npm start # start
