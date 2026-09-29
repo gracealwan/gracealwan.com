@@ -4,7 +4,12 @@ Works in progress personal website!
 npm install # install dependencies
 npm start # start
 # open at localhost:3000
+npm run verify # lint (oxlint + Stylelint) and typecheck
+npm run build # verify, bundle to dist/, then smoke-test the bundle in jsdom
 ```
+
+`npm run build` is what Vercel runs on every push, so a lint error, type error, or
+a production bundle that fails to render blocks the deploy.
 
 ## Cutting a new major version
 
