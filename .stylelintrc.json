@@ -1,0 +1,44 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "plugins": ["stylelint-declaration-strict-value"],
+  "rules": {
+    "color-no-hex": true,
+    "color-named": "never",
+    "function-disallowed-list": ["rgb", "rgba", "hsl", "hsla", "hwb", "lab", "lch", "oklab", "oklch", "color"],
+    "scale-unlimited/declaration-strict-value": [
+      [
+        "/color$/",
+        "background",
+        "fill",
+        "stroke",
+        "/^font-(family|size|weight)$/",
+        "line-height",
+        "letter-spacing",
+        "/^(padding|margin)/",
+        "gap",
+        "/^(top|right|bottom|left|inset)$/",
+        "/^(width|height)$/",
+        "border-radius",
+        "outline-offset",
+        "opacity",
+        "z-index",
+        "/^transition-(duration|delay)$/"
+      ],
+      {
+        "ignoreValues": ["inherit", "currentcolor", "transparent", "none", "auto", "0", "0s", "1", "50%", "100vh", "initial", "unset"],
+        "message": "Use a design token from src/styles/tokens.css via var() instead of a raw value for \"${property}\""
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["src/styles/tokens.css"],
+      "rules": {
+        "color-no-hex": null,
+        "color-named": null,
+        "function-disallowed-list": null,
+        "scale-unlimited/declaration-strict-value": null
+      }
+    }
+  ]
+}

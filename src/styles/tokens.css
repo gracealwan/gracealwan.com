@@ -1,0 +1,44 @@
+/* Design tokens. The only stylesheet allowed to contain raw values;
+   everything else references these through var(). Enforced by Stylelint. */
+:root {
+  /* Color */
+  --color-brand: #ff1bb7;
+  --color-on-brand: #fff;
+
+  /* Typography */
+  --font-family-base: sans-serif;
+  --font-weight-light: 200;
+  --font-size-body: 1rem;
+  --font-size-small: 0.8rem;
+  --line-height-tight: 1rem;
+  --letter-spacing-wide: 0.02em;
+
+  /* Space */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-4: 1rem;
+
+  /* Shape */
+  --border-width-thin: 1px;
+  --radius-small: 2px;
+  --focus-ring-offset: 2px;
+  --size-dot: 4px;
+
+  /* Interaction */
+  --opacity-muted: 0.7;
+  --opacity-subtle: 0.85;
+  --scale-hover: 1.08;
+  --scale-press: 0.96;
+
+  /* Motion */
+  --duration-press: 80ms;
+  --duration-exit-fade: 120ms;
+  --duration-exit: 140ms;
+  --duration-hover-fade: 150ms;
+  --duration-hover: 180ms;
+  --duration-enter-fade: 220ms;
+  --duration-enter: 280ms;
+  --duration-stagger: 40ms;
+  --distance-rise: 6px;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}

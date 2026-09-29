@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, type PointerEvent } from 'react';
 import * as styles from './VersionSwitcher.module.css';
 import { versions } from './versions';
 
@@ -10,14 +10,15 @@ const CLOSE_DELAY_MS = 150;
 // The menu is a native popover, so the browser owns open state, outside-click and
 // Escape dismissal, and focus return; there is no React state here.
 export default function VersionSwitcher() {
-  const closeTimeout = useRef();
+  const closeTimeout = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   // The popover stays a DOM child of .root, so pointerleave only fires once the cursor
   // has left both the trigger and the menu, even though the menu renders in the top layer.
-  function scheduleClose(event) {
+  function scheduleClose(event: PointerEvent<HTMLDivElement>) {
     // Touch pointers leave on every tap release, which would close the menu as it opens.
     if (event.pointerType === 'touch') return;
-    const menu = event.currentTarget.querySelector('[popover]');
+    const menu = event.currentTarget.querySelector<HTMLElement>('[popover]');
+    if (!menu) return;
     closeTimeout.current = setTimeout(() => {
       if (menu.matches(':popover-open')) menu.hidePopover();
     }, CLOSE_DELAY_MS);

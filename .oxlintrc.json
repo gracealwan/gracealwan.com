@@ -1,0 +1,46 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["eslint", "typescript", "unicorn", "oxc", "react", "jsx-a11y"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "perf": "error"
+  },
+  "rules": {
+    "no-console": "error",
+    "no-debugger": "error",
+    "no-unused-vars": "error",
+    "no-else-return": "error",
+    "no-useless-catch": "error",
+    "no-useless-computed-key": "error",
+    "no-nested-ternary": "error",
+    "default-param-last": "error",
+    "no-magic-numbers": [
+      "error",
+      { "ignore": [0, 1, -1], "ignoreArrayIndexes": true, "enforceConst": true }
+    ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "react",
+            "importNames": ["useState", "useEffect", "useLayoutEffect"],
+            "message": "Let native HTML, CSS, or imperative DOM calls own UI state first. If a hook is truly needed, disable this line and say why."
+          }
+        ]
+      }
+    ],
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "error",
+    "react/self-closing-comp": "error",
+    "react/react-in-jsx-scope": "off",
+    "typescript/no-explicit-any": "error",
+    "typescript/no-inferrable-types": "error",
+    "typescript/no-non-null-assertion": "error",
+    "typescript/prefer-as-const": "error",
+    "typescript/consistent-type-imports": "error",
+    "unicorn/prefer-number-properties": "error"
+  },
+  "ignorePatterns": ["dist/**", "node_modules/**"]
+}

@@ -1,0 +1,15 @@
+.app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--color-brand);
+}
+
+.message {
+  color: var(--color-on-brand);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-light);
+  text-align: center;
+}
