@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-module.exports = {
+module.exports = (_env, argv) => ({
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -17,6 +17,9 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
+          // Babel 8 picks dev vs prod JSX from its env, which otherwise defaults to
+          // development and emits jsxDEV calls that React's production build lacks.
+          options: { envName: argv.mode },
         },
       },
       {
@@ -39,4 +42,4 @@ module.exports = {
     port: 3000,
     historyApiFallback: true,
   },
-};
+});
