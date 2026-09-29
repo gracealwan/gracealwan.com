@@ -1,0 +1,128 @@
+.root {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  font-weight: 200;
+  line-height: 1rem;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+
+.trigger {
+  display: block;
+  padding: 0.5rem;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+  opacity: 0.85;
+  transform-origin: bottom right;
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1), opacity 180ms ease-out;
+}
+
+@media (hover: hover) {
+  .trigger:hover {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+.trigger:active {
+  transform: scale(0.96);
+  transition-duration: 80ms;
+}
+
+.root:has(.menu:popover-open) .trigger {
+  opacity: 1;
+}
+
+.trigger:focus-visible,
+.link:focus-visible {
+  outline: 1px solid #fff;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Popovers render in the top layer, so position against the viewport:
+   right edge matches .root, bottom sits on top of the 2rem-tall trigger. */
+.menu {
+  inset: auto 1rem 3rem auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  overflow: visible;
+  list-style: none;
+  text-align: right;
+  white-space: nowrap;
+  /* Keep the popover rendered until the item exit transitions finish. */
+  transition: display 140ms allow-discrete, overlay 140ms allow-discrete;
+}
+
+.item {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 120ms ease-in, transform 140ms ease-in;
+}
+
+.menu:popover-open .item {
+  opacity: 1;
+  transform: none;
+  transition: opacity 220ms ease-out, transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--i) * 40ms);
+}
+
+@starting-style {
+  .menu:popover-open .item {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.link,
+.current {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.link {
+  opacity: 0.7;
+  transform-origin: right center;
+  transition: opacity 150ms ease-out, transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: hover) {
+  .link:hover {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+.current::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin-right: 0.4em;
+  border-radius: 50%;
+  background: currentColor;
+  vertical-align: middle;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trigger,
+  .menu,
+  .item,
+  .link {
+    transition-duration: 0s !important;
+    transform: none !important;
+  }
+}

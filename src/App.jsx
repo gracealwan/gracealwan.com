@@ -1,4 +1,4 @@
-import React from 'react';
+import VersionSwitcher from './VersionSwitcher';
 
 const appBackground = {
   minHeight: '100vh',
@@ -22,6 +22,7 @@ export default function App() {
       <div style={textStyle}>
         Oh hey!<br />Under construction...
       </div>
+      <VersionSwitcher />
     </div>
   );
 }
