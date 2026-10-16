@@ -5,9 +5,7 @@
   position: fixed;
   right: var(--space-4);
   bottom: var(--space-4);
-  font-family: var(--font-family-base);
   font-size: var(--font-size-small);
-  font-weight: var(--font-weight-light);
   line-height: var(--line-height-tight);
   letter-spacing: var(--letter-spacing-wide);
 }

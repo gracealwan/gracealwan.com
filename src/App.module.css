@@ -15,7 +15,5 @@
 
 .message {
   margin: var(--space-4) 0 0;
-  font-family: var(--font-family-base);
   font-size: var(--font-size-body);
-  font-weight: var(--font-weight-light);
 }

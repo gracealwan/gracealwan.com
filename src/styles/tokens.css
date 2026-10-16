@@ -60,9 +60,8 @@
   --shadow-5: var(--stone-5);
 
   /* Typography */
-  --font-family-base: sans-serif;
+  --font-family-base: "Nunito", sans-serif;
   --font-family-display: "Libertinus Keyboard", serif;
-  --font-weight-light: 200;
   --font-weight-regular: 400;
   --font-size-body: 1rem;
   --font-size-small: 0.8rem;
