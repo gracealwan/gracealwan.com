@@ -27,6 +27,11 @@ module.exports = (_env, argv) => ({
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
+      {
+        test: /\.woff2$/,
+        type: 'asset/resource',
+        generator: { filename: 'fonts/[name].[contenthash:8][ext]' },
+      },
     ],
   },
   plugins: [

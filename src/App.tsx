@@ -1,12 +1,12 @@
 import * as styles from './App.module.css';
+import Title from './Title';
 import VersionSwitcher from './VersionSwitcher';
 
 export default function App() {
   return (
     <div className={styles.app}>
-      <div className={styles.message}>
-        Oh hey!<br />Under construction...
-      </div>
+      <Title />
+      <p className={styles.message}>Under construction, come back soon</p>
       <VersionSwitcher />
     </div>
   );

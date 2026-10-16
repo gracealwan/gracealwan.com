@@ -32,7 +32,7 @@
   },
   "overrides": [
     {
-      "files": ["src/styles/tokens.css"],
+      "files": ["src/styles/tokens.css", "src/styles/fonts.css"],
       "rules": {
         "color-no-hex": null,
         "color-named": null,

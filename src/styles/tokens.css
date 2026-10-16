@@ -61,16 +61,41 @@
 
   /* Typography */
   --font-family-base: sans-serif;
+  --font-family-display: "Libertinus Keyboard", serif;
   --font-weight-light: 200;
+  --font-weight-regular: 400;
   --font-size-body: 1rem;
   --font-size-small: 0.8rem;
+
+  /* Two lines below lg. A word is 5.5em wide. 12vw suits md; the 9vw + 1.25rem
+     floor lifts phones (cross-over near 667px, so no jump). vh cap guards landscape.
+     15vw ceiling keeps two words inside the viewport at large root font sizes. */
+  --font-size-display: clamp(min(2.5rem, 15vw), min(max(12vw, 9vw + 1.25rem), 24vh, 15vw), 7rem);
+
+  /* One line at lg+. The whole name is about 11em wide, so 6vw takes about two
+     thirds of the screen, capped so it doesn't keep growing on xl and up. */
+  --font-size-display-one-line: clamp(4rem, 6vw, 6.5rem);
   --line-height-tight: 1rem;
+  --line-height-display: 1.1;
   --letter-spacing-wide: 0.02em;
 
   /* Space */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-4: 1rem;
+  --space-page: clamp(1rem, 6vw, 6rem);
+
+  /* Below lg the title drops lower so it doesn't crowd the top of the screen. */
+  --space-page-top-narrow: clamp(4rem, 16vh, 9rem);
+
+  /* lg and up: puts the one-line title's vertical center about a fifth of the way down the viewport. */
+  --space-page-top-wide: max(var(--space-page), 18vh);
+  --space-title-word: 0.3em;
+  --space-title-row: 0.1em;
+
+  /* Keycap ink sits 0.12em inside the glyph box on the left and top; pull back
+     so the key edges align with the page padding. */
+  --space-title-ink-offset: -0.12em;
 
   /* Shape */
   --border-width-thin: 1px;
@@ -95,6 +120,31 @@
   --duration-stagger: 40ms;
   --distance-rise: 6px;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-quad: cubic-bezier(0.5, 0, 0.75, 0);
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Title entrance: each key falls in and is pressed, one after another */
+  --duration-title-pause: 150ms;
+  --duration-key-press: 700ms;
+  --duration-key-stagger: 75ms;
+  --distance-key-drop: -0.4em;
+  --distance-key-travel: 0.05em;
+  --scale-key-squash: 0.9;
+
+  /* Title hover and press: a single key hops up and springs back */
+  --duration-key-hop: 320ms;
+  --distance-key-hop: -0.08em;
+
+  /* Hovered key's hit area reach below its box. Beats the ease-out-back peak
+     (about -0.088em) and stays inside --space-title-row. */
+  --distance-key-hop-reach: -0.1em;
+
+  /* Opaque keycap face. The glyph is only an outline, so a flipping key needs a
+     fill or the key it jumps over shows through. Inset from the 1.1em key box to
+     the keycap ink (0.12em left/top), pulled in 0.02em so it never pokes past it. */
+  --inset-key-face: 0.14em 0.12em 0.034em 0.14em;
+  --radius-key-face: 0.06em;
+  --z-index-behind: -1;
 
   /* Native scrollbars and form controls follow the active theme. */
   color-scheme: light;

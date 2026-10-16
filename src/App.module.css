@@ -1,13 +1,21 @@
 .app {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  box-sizing: border-box;
   min-height: 100vh;
+  padding: var(--space-page-top-narrow) var(--space-page) var(--space-page);
+}
+
+/* lg and up, matching Title's one-line breakpoint. */
+@media (width >= 64rem) {
+  .app {
+    padding-top: var(--space-page-top-wide);
+  }
 }
 
 .message {
+  margin: var(--space-4) 0 0;
   font-family: var(--font-family-base);
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-light);
-  text-align: center;
 }
