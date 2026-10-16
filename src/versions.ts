@@ -13,8 +13,9 @@ type VersionManifest = {
 
 // Hand-maintained. See README "Cutting a new major version" before editing.
 export const versions: VersionManifest = {
-  current: '1.0.0',
+  current: '2.0.0',
   majors: [
-    { major: 1, version: '1.0.0', url: 'https://www.gracealwan.com' },
+    { major: 2, version: '2.0.0', url: 'https://www.gracealwan.com' },
+    { major: 1, version: '1.0.0', url: 'https://v1.gracealwan.com' },
   ],
 };

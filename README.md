@@ -15,16 +15,27 @@ a production bundle that fails to render blocks the deploy.
 
 The version button (bottom-right) reads from `src/versions.ts`, a hand-maintained
 manifest bundled at build time. `current` is the label on the button; `majors` lists
-the latest release of each major, newest first. To ship a new major:
+the latest release of each major, newest first. Each frozen major lives at its own
+`vN.gracealwan.com` subdomain. To ship a new major (examples use `v2` as the outgoing major):
 
-1. Before merging the breaking change, find the last production deployment of the
+1. Before pushing the breaking change, find the last production deployment of the
    outgoing major (Vercel dashboard, or `list_deployments` via the Vercel API/MCP).
-2. In Vercel, add a project domain for the frozen version (e.g. `v1.gracealwan.com`)
-   and alias it to that deployment ID. Plain `*.vercel.app` deployment URLs sit behind
-   this project's SSO protection; a `gracealwan.com` subdomain counts as a custom
-   domain and is publicly reachable.
-3. In the same commit that ships the new major, update `src/versions.ts`:
+2. Add DNS for the subdomain. DNS is at Namecheap (Domain List → Manage →
+   Advanced DNS), not Vercel. Add a CNAME with host `v2` and the same target as the
+   `www` record.
+3. Point the subdomain at that deployment with a plain alias:
+   `vercel alias set <deployment-url> v2.gracealwan.com`, or `assign_alias` via the
+   API/MCP. Do **not** add it as a project domain. Project domains without a git
+   branch move to every new production deployment, so the subdomain would silently
+   start serving the new major. If the alias fails with `cert_missing`, issue a cert
+   for the subdomain first (`issue_cert`) once DNS resolves.
+4. Make the subdomain public. The project uses Vercel Authentication with Standard
+   Protection, which only exempts the *current* production domains. An alias to an
+   older deployment redirects to the Vercel login. In the dashboard, open Settings →
+   Deployment Protection → Deployment Protection Exceptions → Add Domain, and add
+   the subdomain. Check it loads logged out before continuing.
+5. In the same commit that ships the new major, update `src/versions.ts`:
    - point the outgoing major's entry at its frozen subdomain
    - add the new major's entry at the top of `majors`
    - bump `current` to the new version
-4. Push to `main`; Vercel auto-deploys as usual.
+6. Push to `main`; Vercel auto-deploys as usual.

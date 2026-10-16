@@ -1,9 +1,63 @@
 /* Design tokens. The only stylesheet allowed to contain raw values;
-   everything else references these through var(). Enforced by Stylelint. */
+   everything else references these through var(). Enforced by Stylelint.
+
+   Theme: yellow, pink, light pink on warm white (light) and warm charcoal (dark).
+
+   Contrast notes (calculated, verify before shipping)
+   Light mode (bg #FFFAF3)
+   - Text #2B1218: 16.8:1 (AAA)
+   - Pink #E92E63 as text: 4.0:1 (large text, icons, UI only)
+   - Yellow #FFD104 and light pink #FF91A3 as text: 1.4:1 and 2.1:1 (fills only)
+   - Dark text on yellow: 12.0:1, on light pink: 8.2:1
+   - White on pink: 4.2:1 (large or bold labels)
+   Dark mode (bg #1A1514)
+   - Text #FFF6EC: 16.9:1 (AAA)
+   - Yellow: 12.4:1, light pink: 8.5:1, pink: 4.3:1
+   - Pink holds 3:1 on charcoal-1 to charcoal-3 only
+*/
 :root {
-  /* Color */
-  --color-brand: #ff1bb7;
-  --color-on-brand: #fff;
+  /* Core colors */
+  --yellow: #FFD104;
+  --pink: #E92E63;
+  --pink-light: #FF91A3;
+
+  /* Light mode neutrals */
+  --warm-white: #FFFAF3;
+  --ink: #2B1218;
+
+  /* Stone shadow tones (light mode), darkest last */
+  --stone-1: #F0EBE6;
+  --stone-2: #E3DBD3;
+  --stone-3: #D4C8BF;
+  --stone-4: #C2B3A8;
+  --stone-5: #AD9A90;
+
+  /* Dark mode neutrals */
+  --warm-charcoal: #1A1514;
+  --paper: #FFF6EC;
+
+  /* Charcoal tones (dark mode): 1 is deeper than base, 2 to 5 get lighter */
+  --charcoal-1: #100D0C;
+  --charcoal-2: #251E1E;
+  --charcoal-3: #312928;
+  --charcoal-4: #3D3433;
+  --charcoal-5: #4A403F;
+
+  /* Roles: light mode (default) */
+  --bg: var(--warm-white);
+  --text: var(--ink);
+  --heading: var(--pink);
+  --link: var(--pink);
+  --on-yellow: var(--ink);
+  --on-pink-light: var(--ink);
+  --on-pink: #FFF;
+
+  /* Surface and shadow tones */
+  --shadow-1: var(--stone-1);
+  --shadow-2: var(--stone-2);
+  --shadow-3: var(--stone-3);
+  --shadow-4: var(--stone-4);
+  --shadow-5: var(--stone-5);
 
   /* Typography */
   --font-family-base: sans-serif;
@@ -41,4 +95,49 @@
   --duration-stagger: 40ms;
   --distance-rise: 6px;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Native scrollbars and form controls follow the active theme. */
+  color-scheme: light;
+}
+
+/* Roles: dark mode, follows the system setting */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: var(--warm-charcoal);
+    --text: var(--paper);
+    --heading: var(--pink-light);
+    --link: var(--yellow);
+    --on-yellow: var(--warm-charcoal);
+    --on-pink-light: var(--warm-charcoal);
+    --on-pink: #FFF;
+
+    /* Surface and shadow tones */
+    --shadow-1: var(--charcoal-1);
+    --shadow-2: var(--charcoal-2);
+    --shadow-3: var(--charcoal-3);
+    --shadow-4: var(--charcoal-4);
+    --shadow-5: var(--charcoal-5);
+
+    color-scheme: dark;
+  }
+}
+
+/* Roles: dark mode, manual toggle via <html data-theme="dark"> */
+:root[data-theme="dark"] {
+  --bg: var(--warm-charcoal);
+  --text: var(--paper);
+  --heading: var(--pink-light);
+  --link: var(--yellow);
+  --on-yellow: var(--warm-charcoal);
+  --on-pink-light: var(--warm-charcoal);
+  --on-pink: #FFF;
+
+  /* Surface and shadow tones */
+  --shadow-1: var(--charcoal-1);
+  --shadow-2: var(--charcoal-2);
+  --shadow-3: var(--charcoal-3);
+  --shadow-4: var(--charcoal-4);
+  --shadow-5: var(--charcoal-5);
+
+  color-scheme: dark;
 }
