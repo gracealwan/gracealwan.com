@@ -5,27 +5,30 @@
   right: var(--inset-pool-right);
   bottom: var(--inset-pool-bottom);
   z-index: var(--z-index-behind);
-  display: block;
   width: var(--size-pool);
+  translate: var(--offset-pool-x) var(--offset-pool-y);
+}
+
+/* The drawing sets the box's height; the water fills the same box underneath.
+   Where WebGL is unavailable, the fallback background shows instead. */
+.drawing {
+  position: relative;
+  display: block;
   height: auto;
 }
 
-/* Below md (768px): left and up. */
-@media (width < 48rem) {
-  .pool {
-    translate: var(--offset-pool-narrow);
-  }
-}
-
-/* lg (1024px) and up: left and down, matching Title's one-line breakpoint. */
-@media (width >= 64rem) {
-  .pool {
-    translate: var(--offset-pool-wide);
-  }
-}
-
 .water {
-  fill: var(--pool-water);
+  position: absolute;
+  inset: 0;
+  clip-path: var(--clip-pool-water);
+  background: var(--pool-water-fallback);
+}
+
+/* Only the on-screen part of the water, so the gradient's shapes land where
+   they can be seen. The water's clip still trims it to the pool's outline. */
+.shader {
+  position: absolute;
+  inset: var(--inset-pool-shader);
 }
 
 .wall-long {

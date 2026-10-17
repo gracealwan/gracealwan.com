@@ -61,7 +61,7 @@
 
   /* Pool illustration, one role per surface so dark mode can recolor each.
      Names follow the shapes, not Figma (its export has no layer names). */
-  --pool-water: #FFF;
+  --pool-water-fallback: linear-gradient(162deg, var(--pink), var(--pink-light), var(--yellow));
   --pool-wall-long: var(--stone-3);
   --pool-wall-short: var(--stone-4);
   --pool-ladder: var(--stone-3);
@@ -165,13 +165,45 @@
   --inset-pool-right: min(4.5vw, 17vw - 7rem);
   --inset-pool-bottom: -1rem;
 
-  /* Nudges on top of the fitted placement: x then y, negative is left or up.
-     Wide drops 4.5rem up to 1280px, then grows with the screen so xl sits lower. */
-  --offset-pool-narrow: -12vw -3rem;
-  --offset-pool-wide: -3vw max(4.5rem, 10vw - 3.5rem);
+  /* Nudges on top of the fitted placement, negative is left or up. md has none;
+     sm and lg+ set theirs below. */
+  --offset-pool-x: 0rem;
+  --offset-pool-y: 0rem;
+
+  /* The water's outline as percentages of the pool's box, from the cropped Figma
+     viewBox. The mesh gradient is clipped to this so it stays off the deck. The
+     two back edges run along the middle of the walls, not their outer edge, so
+     the walls fully cover the clip's antialiasing. */
+  --clip-pool-water: polygon(1.001% 66.731%, 65.99% 1.994%, 99.006% 35.262%, 34.017% 100%);
+
+  /* Trims the shader to the part of the pool's box that is on screen, so its
+     motion isn't spent off the edges. Each side is how far the box overhangs
+     the page there (the page is 100vw wide; the pool never pokes out the top). */
+  --inset-pool-shader:
+    0
+    max(0rem, var(--offset-pool-x) - var(--inset-pool-right))
+    max(0rem, var(--offset-pool-y) - var(--inset-pool-bottom))
+    max(0rem, var(--size-pool) + var(--inset-pool-right) - var(--offset-pool-x) - 100vw);
 
   /* Native scrollbars and form controls follow the active theme. */
   color-scheme: light;
+}
+
+/* Below md (768px): pool sits left and up. */
+@media (width < 48rem) {
+  :root {
+    --offset-pool-x: -8vw;
+    --offset-pool-y: -3rem;
+  }
+}
+
+/* lg (1024px) and up: left and down. The drop is 4.5rem up to 1280px, then grows
+   with the screen so xl sits lower. */
+@media (width >= 64rem) {
+  :root {
+    --offset-pool-x: -3vw;
+    --offset-pool-y: max(4.5rem, 10vw - 3.5rem);
+  }
 }
 
 /* Roles: dark mode, follows the system setting */
