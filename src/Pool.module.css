@@ -1,0 +1,61 @@
+/* Anchored to the bottom right of the first screen. The pool runs off the left
+   edge, and on phones off the right edge too (tokens.css has the sizing math). */
+.pool {
+  position: absolute;
+  right: var(--inset-pool-right);
+  bottom: var(--inset-pool-bottom);
+  z-index: var(--z-index-behind);
+  display: block;
+  width: var(--size-pool);
+  height: auto;
+}
+
+/* Below md (768px): left and up. */
+@media (width < 48rem) {
+  .pool {
+    translate: var(--offset-pool-narrow);
+  }
+}
+
+/* lg (1024px) and up: left and down, matching Title's one-line breakpoint. */
+@media (width >= 64rem) {
+  .pool {
+    translate: var(--offset-pool-wide);
+  }
+}
+
+.water {
+  fill: var(--pool-water);
+}
+
+.wall-long {
+  fill: var(--pool-wall-long);
+}
+
+.wall-short {
+  fill: var(--pool-wall-short);
+}
+
+.ladder {
+  fill: var(--pool-ladder);
+}
+
+.board-top {
+  fill: var(--pool-board-top);
+}
+
+.board-edge {
+  fill: var(--pool-board-edge);
+}
+
+.board-tip {
+  fill: var(--pool-board-tip);
+}
+
+.stand-front {
+  fill: var(--pool-stand-front);
+}
+
+.stand-side {
+  fill: var(--pool-stand-side);
+}

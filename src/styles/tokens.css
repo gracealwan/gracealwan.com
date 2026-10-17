@@ -59,6 +59,18 @@
   --shadow-4: var(--stone-4);
   --shadow-5: var(--stone-5);
 
+  /* Pool illustration, one role per surface so dark mode can recolor each.
+     Names follow the shapes, not Figma (its export has no layer names). */
+  --pool-water: #FFF;
+  --pool-wall-long: var(--stone-3);
+  --pool-wall-short: var(--stone-4);
+  --pool-ladder: var(--stone-3);
+  --pool-board-top: var(--stone-2);
+  --pool-board-edge: var(--stone-4);
+  --pool-board-tip: var(--stone-5);
+  --pool-stand-front: var(--stone-2);
+  --pool-stand-side: var(--stone-5);
+
   /* Typography */
   --font-family-base: "Nunito", sans-serif;
   --font-family-display: "Libertinus Keyboard", serif;
@@ -144,6 +156,19 @@
   --inset-key-face: 0.14em 0.12em 0.034em 0.14em;
   --radius-key-face: 0.06em;
   --z-index-behind: -1;
+
+  /* Pool placement, fitted to the Figma frames (402, 834 and 1280px wide).
+     The pool stays roughly the same size everywhere, so it fills phones and
+     runs off their right edge, but never gets narrower than the screen on lg+.
+     Right inset is the gap past the far corner; negative crops it on phones. */
+  --size-pool: max(63rem + 28vw, 106vw);
+  --inset-pool-right: min(4.5vw, 17vw - 7rem);
+  --inset-pool-bottom: -1rem;
+
+  /* Nudges on top of the fitted placement: x then y, negative is left or up.
+     Wide drops 4.5rem up to 1280px, then grows with the screen so xl sits lower. */
+  --offset-pool-narrow: -12vw -3rem;
+  --offset-pool-wide: -3vw max(4.5rem, 10vw - 3.5rem);
 
   /* Native scrollbars and form controls follow the active theme. */
   color-scheme: light;

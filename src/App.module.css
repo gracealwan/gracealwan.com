@@ -1,4 +1,9 @@
+/* Positions the pool and clips where it bleeds off the screen. isolation keeps
+   the pool's negative z-index above the page background but behind the text. */
 .app {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
