@@ -85,6 +85,12 @@
   initial-value: transparent;
 }
 
+@property --surface-card {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
 @property --pool-wall-long {
   syntax: "<color>";
   inherits: true;
@@ -184,6 +190,9 @@
   --shadow-4: var(--stone-4);
   --shadow-5: var(--stone-5);
 
+  /* Small cards like the version switcher: a step off the background. */
+  --surface-card: var(--stone-1);
+
   /* Pool illustration, one role per surface so dark mode can recolor each.
      Names follow the shapes, not Figma (its export has no layer names). */
   --pool-water-fallback: linear-gradient(162deg, var(--pink), var(--pink-light), var(--yellow));
@@ -242,6 +251,7 @@
   /* Shape */
   --border-width-thin: 1px;
   --radius-small: 2px;
+  --radius-card: 0.5rem;
   --focus-ring-offset: 2px;
   --size-dot: 4px;
 
@@ -262,6 +272,7 @@
   --duration-enter: 280ms;
   --duration-stagger: 40ms;
   --distance-rise: 6px;
+  --scale-card-enter: 0.94;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-quad: cubic-bezier(0.5, 0, 0.75, 0);
   --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -374,6 +385,7 @@
     --shadow-3: var(--charcoal-3);
     --shadow-4: var(--charcoal-4);
     --shadow-5: var(--charcoal-5);
+    --surface-card: var(--charcoal-2);
 
     /* Pool deck: lit from above like light mode, so top faces are the lightest
        deck tone and side faces step down toward the background. */
@@ -406,6 +418,7 @@
   --shadow-3: var(--charcoal-3);
   --shadow-4: var(--charcoal-4);
   --shadow-5: var(--charcoal-5);
+  --surface-card: var(--charcoal-2);
 
   /* Pool deck, matching the system dark mode block above. */
   --pool-wall-long: var(--charcoal-deck-2);

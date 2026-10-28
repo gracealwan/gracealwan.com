@@ -15,7 +15,7 @@ body {
 :root {
   transition-property:
     --bg, --text, --heading, --link, --on-yellow, --on-pink-light,
-    --shadow-1, --shadow-2, --shadow-3, --shadow-4, --shadow-5,
+    --shadow-1, --shadow-2, --shadow-3, --shadow-4, --shadow-5, --surface-card,
     --pool-wall-long, --pool-wall-short, --pool-ladder, --pool-board-top,
     --pool-board-edge, --pool-board-tip, --pool-stand-front, --pool-stand-side;
   transition-duration: var(--duration-theme);

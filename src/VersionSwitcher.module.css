@@ -1,6 +1,6 @@
 .root {
-  /* The trigger is one line tall plus padding; the menu sits directly on top of it. */
-  --trigger-height: calc(var(--line-height-tight) + 2 * var(--space-2));
+  /* The trigger is one line tall plus padding; the menu sits just above it. */
+  --trigger-height: calc(var(--line-height-tight) + 2 * var(--space-1));
 
   position: fixed;
   right: var(--space-4);
@@ -10,25 +10,27 @@
   letter-spacing: var(--letter-spacing-wide);
 }
 
+/* The trigger and the menu are both cards in one of the theme's background shades. */
+.trigger,
+.menu {
+  border-radius: var(--radius-card);
+  background: var(--surface-card);
+}
+
 .trigger {
   display: block;
-  padding: var(--space-2);
+  padding: var(--space-1) var(--space-2);
   border: 0;
-  background: none;
   color: inherit;
   font: inherit;
   letter-spacing: inherit;
   cursor: pointer;
-  opacity: var(--opacity-subtle);
   transform-origin: bottom right;
-  transition:
-    transform var(--duration-hover) var(--ease-out-expo),
-    opacity var(--duration-hover) ease-out;
+  transition: transform var(--duration-hover) var(--ease-out-expo);
 }
 
 @media (hover: hover) {
   .trigger:hover {
-    opacity: 1;
     transform: scale(var(--scale-hover));
   }
 }
@@ -39,24 +41,45 @@
 }
 
 /* Popovers render in the top layer, so position against the viewport:
-   right edge matches .root, bottom sits on top of the trigger. */
+   right edge matches .root, bottom sits a little above the trigger. */
 .menu {
-  inset: auto var(--space-4) calc(var(--space-4) + var(--trigger-height)) auto;
+  inset: auto var(--space-4) calc(var(--space-4) + var(--trigger-height) + var(--space-2)) auto;
   overflow: visible;
   margin: 0;
-  padding: 0;
+  padding: var(--space-1);
   border: 0;
-  background: none;
   color: inherit;
   font: inherit;
   list-style: none;
   text-align: right;
   white-space: nowrap;
+  opacity: 0;
+  transform: translateY(var(--distance-rise)) scale(var(--scale-card-enter));
+  transform-origin: bottom right;
 
-  /* Keep the popover rendered until the item exit transitions finish. */
+  /* Keep the popover rendered until the exit transitions finish. */
   transition:
+    opacity var(--duration-exit-fade) ease-in,
+    transform var(--duration-exit) ease-in,
     display var(--duration-exit) allow-discrete,
     overlay var(--duration-exit) allow-discrete;
+}
+
+.menu:popover-open {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--duration-enter-fade) ease-out,
+    transform var(--duration-enter) var(--ease-out-expo),
+    display var(--duration-enter) allow-discrete,
+    overlay var(--duration-enter) allow-discrete;
+}
+
+@starting-style {
+  .menu:popover-open {
+    opacity: 0;
+    transform: translateY(var(--distance-rise)) scale(var(--scale-card-enter));
+  }
 }
 
 .item {
@@ -119,13 +142,12 @@
 
 .trigger:focus-visible,
 .link:focus-visible {
-  border-radius: var(--radius-small);
   outline: var(--border-width-thin) solid var(--link);
   outline-offset: var(--focus-ring-offset);
 }
 
-.root:has(.menu:popover-open) .trigger {
-  opacity: 1;
+.link:focus-visible {
+  border-radius: var(--radius-small);
 }
 
 @media (prefers-reduced-motion: reduce) {
