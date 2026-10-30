@@ -26,3 +26,6 @@ if (!button) {
 }
 
 process.stdout.write(`Smoke test passed: rendered ${button.textContent}\n`);
+// Stops the page's timers, like the title's idle flips, so they don't fire in jsdom
+// and keep the process alive.
+window.close();

@@ -55,12 +55,16 @@ const SPIN_KEYFRAMES: Keyframe[] = [
 
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 
+// Until a visitor clicks a key, a random one flips on its own as a hint that they can.
+// Clicking a key holds the idle flips off for a longer pause.
+const IDLE_FIRST_FLIP_MS = 5000;
+const IDLE_FLIP_INTERVAL_MS = 5000;
+const IDLE_PAUSE_AFTER_CLICK_MS = 10000;
+
 // composite 'add' stacks the flip on the entrance animation's transform instead of
 // replacing it, so a flip mid-entrance doesn't snap the key out of its fall.
-function flipClickedKey(event: MouseEvent) {
-  if (!(event.target instanceof Element)) return;
-  const key = event.target.closest(`.${styles.key}`);
-  if (!key || matchMedia(REDUCED_MOTION_QUERY).matches) return;
+function flipKey(key: Element) {
+  if (matchMedia(REDUCED_MOTION_QUERY).matches) return;
   if (key.getAnimations().some(({ id }) => id === FLIP_ID)) return;
   key.animate(JUMP_KEYFRAMES, { id: FLIP_ID, duration: FLIP_DURATION_MS, composite: 'add' });
   key.animate(SPIN_KEYFRAMES, {
@@ -72,6 +76,26 @@ function flipClickedKey(event: MouseEvent) {
   });
 }
 
+// Returns a function that restarts the countdown, for when a visitor clicks a key.
+function flipKeysWhileIdle(title: HTMLHeadingElement) {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const flipAfter = (delayMs: number) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      // A background tab keeps firing timers but doesn't run animations, so flips
+      // would pile up and all play at once when the visitor comes back.
+      if (!document.hidden) {
+        const keys = title.querySelectorAll(`.${styles.key}`);
+        const key = keys[Math.floor(Math.random() * keys.length)];
+        if (key) flipKey(key);
+      }
+      flipAfter(IDLE_FLIP_INTERVAL_MS);
+    }, delayMs);
+  };
+  flipAfter(IDLE_FIRST_FLIP_MS);
+  return () => flipAfter(IDLE_PAUSE_AFTER_CLICK_MS);
+}
+
 // Keys start paused and invisible; play them once the font is in so a fallback
 // face never flashes mid-animation. Reveal on failure too, in the fallback face.
 // jsdom (the smoke test) has no FontFaceSet, so reveal right away there.
@@ -81,17 +105,27 @@ function playWhenFontLoads(title: HTMLHeadingElement) {
   };
   if (!('fonts' in document)) {
     reveal();
-    return;
+    return Promise.resolve();
   }
-  document.fonts.load(`1em ${getComputedStyle(title).fontFamily}`, NAME).then(reveal, reveal);
+  return document.fonts.load(`1em ${getComputedStyle(title).fontFamily}`, NAME).then(reveal, reveal);
 }
 
 // One delegated listener covers every key. The heading owns it, so it goes away with
-// the element and needs no cleanup.
+// the element and needs no cleanup. The title never unmounts, so the idle flips run
+// for the life of the page, counting from when the keys appear.
 function setUpTitle(title: HTMLHeadingElement | null) {
   if (!title) return;
-  title.addEventListener('click', flipClickedKey);
-  playWhenFontLoads(title);
+  let restartIdleFlips: (() => void) | undefined;
+  title.addEventListener('click', (event) => {
+    if (!(event.target instanceof Element)) return;
+    const key = event.target.closest(`.${styles.key}`);
+    if (!key) return;
+    restartIdleFlips?.();
+    flipKey(key);
+  });
+  playWhenFontLoads(title).then(() => {
+    restartIdleFlips = flipKeysWhileIdle(title);
+  });
 }
 
 export default function Title() {
