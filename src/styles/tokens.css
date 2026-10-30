@@ -289,6 +289,10 @@
   --offset-inline-icon: -0.15em;
   --space-inline-icon: 0.1em;
 
+  /* The "Let's dive in" arrow: a little shorter than the capitals, centered on them. */
+  --size-cta-arrow: 0.7em;
+  --offset-cta-arrow: -0.05em;
+
   /* Toast */
   --shadow-toast: 0 0.5rem 1.5rem color-mix(in srgb, var(--ink) 20%, transparent);
 

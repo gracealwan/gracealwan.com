@@ -32,6 +32,23 @@ export function SunIcon({ className }: IconProps) {
   );
 }
 
+const ARROW_PATH = 'M20 7.36133L10.25 14.7227V10.8613H0V3.86133H10.25V0L20 7.36133Z';
+// Mask ids are page-wide, and there is only ever one arrow.
+const ARROW_MASK_ID = 'intro-arrow';
+
+// The outline is a stroke masked to the arrow's own shape, so only the inner half
+// shows and the outline stays inside the arrow.
+export function ArrowIcon({ className }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 20 15" fill="none" aria-hidden="true" focusable="false">
+      <mask id={ARROW_MASK_ID} fill="white">
+        <path d={ARROW_PATH} />
+      </mask>
+      <path d={ARROW_PATH} stroke="currentColor" strokeWidth="4" mask={`url(#${ARROW_MASK_ID})`} />
+    </svg>
+  );
+}
+
 const MOON_PATH =
   'M33.0449 6.10156C42.3016 9.07662 49.001 17.7556 49.001 28.001C49.001 40.7035 38.7035 51.001 26.001 51.001C18.0794 51.001 11.0938 46.9958 6.95703 40.9004C9.17711 41.6139 11.5438 42.001 14.001 42.001C26.7035 42.001 37.001 31.7035 37.001 19.001C37.001 14.22 35.5416 9.78029 33.0449 6.10156Z';
 // Mask ids are page-wide, and there is only ever one moon.

@@ -95,8 +95,9 @@
 }
 
 .arrow {
-  display: inline-block;
-  margin-left: var(--space-1);
+  height: var(--size-cta-arrow);
+  margin-left: var(--space-2);
+  vertical-align: var(--offset-cta-arrow);
   transition: transform var(--duration-hover) var(--ease-out-expo);
 }
 

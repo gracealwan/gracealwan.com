@@ -1,5 +1,5 @@
 import * as styles from "./App.module.css";
-import { MoonIcon, SunIcon, WaveIcon } from "./IntroIcons";
+import { ArrowIcon, MoonIcon, SunIcon, WaveIcon } from "./IntroIcons";
 import LightBulb from "./LightBulb";
 import Pool from "./Pool";
 import Title, { TITLE_ENTRANCE_STEPS } from "./Title";
@@ -44,9 +44,7 @@ export default function App() {
         popovertargetaction="show"
       >
         Let’s dive in
-        <span className={styles.arrow} aria-hidden="true">
-          →
-        </span>
+        <ArrowIcon className={styles.arrow} />
       </button>
       <Pool />
       <LightBulb />
