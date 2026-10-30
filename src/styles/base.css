@@ -14,7 +14,7 @@ body {
    everything drawn with them follows. */
 :root {
   transition-property:
-    --bg, --text, --heading, --link, --on-yellow, --on-pink-light,
+    --bg, --text, --heading, --link, --on-yellow, --on-pink-light, --accent-text,
     --shadow-1, --shadow-2, --shadow-3, --shadow-4, --shadow-5, --surface-card,
     --pool-wall-long, --pool-wall-short, --pool-ladder, --pool-board-top,
     --pool-board-edge, --pool-board-tip, --pool-stand-front, --pool-stand-side;

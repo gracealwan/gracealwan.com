@@ -55,6 +55,12 @@
   initial-value: transparent;
 }
 
+@property --accent-text {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
 @property --shadow-1 {
   syntax: "<color>";
   inherits: true;
@@ -145,6 +151,9 @@
   --pink: #E92E63;
   --pink-light: #FF91A3;
 
+  /* Pink deepened just enough to pass AA as body text on warm white (4.6:1). */
+  --pink-text: #D9265A;
+
   /* Light mode neutrals */
   --warm-white: #FFFAF3;
   --ink: #2B1218;
@@ -183,6 +192,9 @@
   --on-pink-light: var(--ink);
   --on-pink: #FFF;
 
+  /* Pink text in a sentence. */
+  --accent-text: var(--pink-text);
+
   /* Surface and shadow tones */
   --shadow-1: var(--stone-1);
   --shadow-2: var(--stone-2);
@@ -215,7 +227,14 @@
   --font-family-base: "Nunito", sans-serif;
   --font-family-display: "Libertinus Keyboard", serif;
   --font-weight-regular: 400;
+  --font-weight-bold: 700;
   --font-size-body: 1rem;
+  --font-size-lead: 1.125rem;
+
+  /* Relative to the surrounding text, so the opening "Hi!" stays in its sentence. */
+  --font-size-greeting: 1.25em;
+  --line-height-body: 1.5;
+  --line-height-inline: 1;
   --font-size-small: 0.8rem;
 
   /* Two lines below lg. A word is 5.5em wide. 12vw suits md; the 9vw + 1.25rem
@@ -234,6 +253,10 @@
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-4: 1rem;
+  --space-6: 1.5rem;
+
+  /* Gap between the title and the intro, roomier on wide screens. */
+  --space-intro: clamp(2rem, 5vw, 3rem);
   --space-page: clamp(1rem, 6vw, 6rem);
 
   /* Below lg the title drops lower so it doesn't crowd the top of the screen. */
@@ -252,8 +275,22 @@
   --border-width-thin: 1px;
   --radius-small: 2px;
   --radius-card: 0.5rem;
+  --radius-pill: 999px;
   --focus-ring-offset: 2px;
   --size-dot: 4px;
+
+  /* Keeps the intro to a comfortable line length. */
+  --size-measure: 34rem;
+
+  /* Icons that sit in a line of text, sized and nudged to the text around them. */
+  --size-inline-icon: 1em;
+  --size-inline-icon-wave: 1.2em;
+  --size-inline-icon-sun: 0.85em;
+  --offset-inline-icon: -0.15em;
+  --space-inline-icon: 0.1em;
+
+  /* Toast */
+  --shadow-toast: 0 0.5rem 1.5rem color-mix(in srgb, var(--ink) 20%, transparent);
 
   /* Interaction */
   --opacity-muted: 0.7;
@@ -272,6 +309,7 @@
   --duration-enter: 280ms;
   --duration-stagger: 40ms;
   --distance-rise: 6px;
+  --distance-nudge: 0.2em;
   --scale-card-enter: 0.94;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-quad: cubic-bezier(0.5, 0, 0.75, 0);
@@ -284,6 +322,14 @@
   --distance-key-drop: -0.4em;
   --distance-key-travel: 0.05em;
   --scale-key-squash: 0.9;
+
+  /* When a key bottoms out: the 40% keyframe of key-press in Title.module.css. */
+  --duration-key-land: calc(var(--duration-key-press) * 0.4);
+
+  /* Intro entrance: the paragraph, then the button, rise in after the title */
+  --duration-intro: 700ms;
+  --duration-intro-stagger: 120ms;
+  --distance-intro-rise: 0.75rem;
 
   /* Title hover and press: a single key hops up and springs back */
   --duration-key-hop: 320ms;
@@ -378,6 +424,7 @@
     --on-yellow: var(--warm-charcoal);
     --on-pink-light: var(--warm-charcoal);
     --on-pink: #FFF;
+    --accent-text: var(--pink-light);
 
     /* Surface and shadow tones */
     --shadow-1: var(--charcoal-1);
@@ -411,6 +458,7 @@
   --on-yellow: var(--warm-charcoal);
   --on-pink-light: var(--warm-charcoal);
   --on-pink: #FFF;
+  --accent-text: var(--pink-light);
 
   /* Surface and shadow tones */
   --shadow-1: var(--charcoal-1);

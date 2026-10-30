@@ -19,7 +19,7 @@ try {
 
 // React 18 renders asynchronously; give it a moment before checking.
 await new Promise((resolve) => setTimeout(resolve, RENDER_WAIT_MS));
-const button = window.document.querySelector('button[popovertarget]');
+const button = window.document.querySelector('button[popovertarget="version-menu"]');
 if (!button) {
   process.stderr.write('Smoke test failed: version button did not render\n');
   process.exit(1);

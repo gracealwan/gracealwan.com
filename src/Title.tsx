@@ -2,6 +2,10 @@ import * as styles from './Title.module.css';
 
 const NAME = 'Grace Alwan';
 
+// The entrance steps through every position in NAME, the space included, so other
+// content can time itself to start once the last key lands.
+export const TITLE_ENTRANCE_STEPS = NAME.length;
+
 // Each letter is its own key so the entrance can type them in one by one. Indexes are
 // positions in NAME, so the space between words takes a beat, like hitting the spacebar.
 const WORDS = NAME.split(' ').map((word, wordIndex, words) => {

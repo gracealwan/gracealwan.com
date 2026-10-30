@@ -1,0 +1,47 @@
+/* Popovers render in the top layer, so position against the viewport:
+   centered along the top edge. */
+.toast {
+  inset: var(--space-6) 0 auto;
+  margin: 0 auto;
+  padding: var(--space-2) var(--space-4);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--text);
+  box-shadow: var(--shadow-toast);
+  color: var(--bg);
+  font: inherit;
+  line-height: var(--line-height-body);
+  opacity: 0;
+  transform: translateY(calc(-1 * var(--distance-rise))) scale(var(--scale-card-enter));
+
+  /* Keep the popover rendered until the exit transitions finish. */
+  transition:
+    opacity var(--duration-exit-fade) ease-in,
+    transform var(--duration-exit) ease-in,
+    display var(--duration-exit) allow-discrete,
+    overlay var(--duration-exit) allow-discrete;
+}
+
+.toast:popover-open {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--duration-enter-fade) ease-out,
+    transform var(--duration-enter) var(--ease-out-back),
+    display var(--duration-enter) allow-discrete,
+    overlay var(--duration-enter) allow-discrete;
+}
+
+@starting-style {
+  .toast:popover-open {
+    opacity: 0;
+    transform: translateY(calc(-1 * var(--distance-rise))) scale(var(--scale-card-enter));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    transition-duration: 0s !important;
+    transform: none !important;
+  }
+}

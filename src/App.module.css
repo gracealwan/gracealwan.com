@@ -1,6 +1,14 @@
 /* Positions the pool and clips where it bleeds off the screen. isolation keeps
-   the pool's negative z-index above the page background but behind the text. */
+   the pool's negative z-index above the page background but behind the text.
+   The intro waits for the title and starts as its last key lands; the delay is
+   built from the title's own timing (Title.module.css), so the two stay in step. */
 .app {
+  --delay-intro: calc(
+    var(--duration-title-pause) +
+    (var(--title-entrance-steps) - 1) * var(--duration-key-stagger) +
+    var(--duration-key-land)
+  );
+
   position: relative;
   isolation: isolate;
   overflow: clip;
@@ -18,7 +26,122 @@
   }
 }
 
-.message {
-  margin: var(--space-4) 0 0;
-  font-size: var(--font-size-body);
+.intro {
+  max-width: var(--size-measure);
+  margin: var(--space-intro) 0 0;
+  font-size: var(--font-size-lead);
+  font-style: italic;
+  line-height: var(--line-height-body);
+  text-wrap: pretty;
+  animation: intro-rise var(--duration-intro) var(--ease-out-expo) both paused;
+  animation-delay: var(--delay-intro);
+}
+
+/* Tight line height so the larger text fits the paragraph's lines instead of
+   pushing its own line taller than the rest. */
+.greeting {
+  font-size: var(--font-size-greeting);
+  line-height: var(--line-height-inline);
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/* The margin clears the italic overhang of the letter before the icon. */
+.icon {
+  height: var(--size-inline-icon);
+  margin-left: var(--space-inline-icon);
+  color: var(--heading);
+  vertical-align: var(--offset-inline-icon);
+}
+
+/* Evens out the drawings' visual weight: the thin-lined hand reads small and
+   the wide, solid sun reads large at the same height. */
+.wave {
+  height: var(--size-inline-icon-wave);
+}
+
+.sun {
+  height: var(--size-inline-icon-sun);
+}
+
+/* Phones end the second sentence early so the intro stays clear of the pool. */
+@media (width < 48rem) {
+  .wide-only {
+    display: none;
+  }
+}
+
+.cta {
+  align-self: flex-start;
+  margin-top: var(--space-4);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent-text);
+  font: inherit;
+  font-size: var(--font-size-lead);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  animation: intro-rise var(--duration-intro) var(--ease-out-expo) both paused;
+  animation-delay: calc(var(--delay-intro) + var(--duration-intro-stagger));
+}
+
+/* Title marks itself once its font is in and its keys start falling; the intro
+   holds until then so it never arrives before the title. */
+.app:has([data-font-ready]) :is(.intro, .cta) {
+  animation-play-state: running;
+}
+
+.arrow {
+  display: inline-block;
+  margin-left: var(--space-1);
+  transition: transform var(--duration-hover) var(--ease-out-expo);
+}
+
+@media (hover: hover) {
+  .cta:hover .arrow {
+    transform: translateX(var(--distance-nudge));
+  }
+}
+
+.cta:focus-visible {
+  border-radius: var(--radius-small);
+  outline: var(--border-width-thin) solid var(--accent-text);
+  outline-offset: var(--focus-ring-offset);
+}
+
+@keyframes intro-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--distance-intro-rise));
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes intro-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro,
+  .cta {
+    animation-name: intro-fade;
+  }
+
+  .arrow {
+    transition-duration: 0s !important;
+    transform: none !important;
+  }
 }

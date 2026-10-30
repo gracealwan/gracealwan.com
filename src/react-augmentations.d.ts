@@ -12,5 +12,6 @@ declare module 'react' {
 
   interface ButtonHTMLAttributes<T> {
     popovertarget?: string;
+    popovertargetaction?: 'toggle' | 'show' | 'hide';
   }
 }
